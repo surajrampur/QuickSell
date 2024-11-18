@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React, { useState, useEffect } from "react";
+import Header from './components/Header/Header';
+import FilterBar from './components/FilterBar/FilterBar';
+import TicketCard from './components/TicketCard/TicketCard';
+
+
+
+import "./App.css";
+
+const App = () => {
+  const [tickets, setTickets] = useState([]);
+  const [filteredTickets, setFilteredTickets] = useState([]);
+
+  useEffect(() => {
+    
+    fetch('https://api.quicksell.co/v1/internal/frontend-assignment')
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            setFilteredTickets(data.tickets || []); // Adjust based on the structure
+        })
+        .catch((error) => console.error(error));
+}, []);
+
+
+  const handleFilter = (filterType) => {
+    // Example: Filter logic (update based on requirement)
+    if (filterType === "group") {
+      const grouped = tickets.sort((a, b) => a.group.localeCompare(b.group));
+      setFilteredTickets([...grouped]);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <FilterBar onFilter={handleFilter} />
+      <div className="ticket-container">
+       {Array.isArray(filteredTickets) && filteredTickets.map((ticket) => (
+    <TicketCard key={ticket.id} ticket={ticket} />
+))}
+
+      </div>
     </div>
   );
-}
+};
 
 export default App;

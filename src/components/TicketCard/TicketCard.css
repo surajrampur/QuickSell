@@ -1,0 +1,22 @@
+.ticket-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px;
+    padding: 20px;
+  }
+  
+  .ticket-card h2 {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
+  
+  .ticket-card .ticket-group {
+    display: inline-block;
+    background: #4caf50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  
